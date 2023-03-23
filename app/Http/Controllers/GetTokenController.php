@@ -53,8 +53,6 @@ class GetTokenController extends Controller
 
             $authUrl = $provider->getAuthorizationUrl($options);
             $_SESSION['oauth2state'] = $provider->getState();
-            // var_dump($authUrl);
-            // die;
             header('Location: ' . $authUrl);
             exit;
         
@@ -77,7 +75,6 @@ class GetTokenController extends Controller
             $db = new BaseDatosController();
             if($db->is_token_empty()) {
                 $db->update_refresh_token($token->getRefreshToken());
-                // echo "Refresh token inserted successfully.";
             }
 
             return $token;
