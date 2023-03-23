@@ -16,13 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::prefix('/')->group(function(){
-    Route::view('home','home')->name('home');
-    Route::post('/get-token',[OAuthController::class,'doGenerateToken'])->name('generate.token');
-    Route::get('/get-token',[OAuthController::class, 'doSuccessToken'])->name('token.success');
-    Route::post('/send',[MailController::class, 'doSendEmail'])->name('send.email');
-});*/
-
 Route::get('/', function () {
     return Redirect::route('home');
 });

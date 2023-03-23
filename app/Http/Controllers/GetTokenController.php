@@ -44,29 +44,6 @@ class GetTokenController extends Controller
                 'https://mail.google.com/'
             ]
         ];
-    
-        // switch ($providerName) {
-        //     case 'Google':
-        //         $provider = new Google($params);
-        //         $options = [
-        //             'scope' => [
-        //                 'https://mail.google.com/'
-        //             ]
-        //         ];
-        //         break;
-        //     case 'Yahoo':
-        //         $provider = new Yahoo($params);
-        //         break;
-        //     case 'Microsoft':
-        //         $provider = new Microsoft($params);
-        //         $options = [
-        //             'scope' => [
-        //                 'wl.imap',
-        //                 'wl.offline_access'
-        //             ]
-        //         ];
-        //         break;
-        // }
          
         if (null === $provider) {
             exit('Provider missing');
