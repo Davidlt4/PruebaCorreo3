@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseDatosController;
 use League\OAuth2\Client\Provider\Google;
-use Hayageek\OAuth2\Client\Provider\Yahoo;
-use Stevenmaguire\OAuth2\Client\Provider\Microsoft;
  
 
 class GetTokenController extends Controller
