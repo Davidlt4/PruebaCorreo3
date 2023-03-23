@@ -11,7 +11,7 @@
 
     <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm flex justify-between">
 
-        <form action="{{ route('generate.token') }}" method="post" class="mr-2">
+        <form action="{{ route('enviar.correo') }}" method="post" class="mr-2">
             @csrf
 
             <label for="email">Email: </label>

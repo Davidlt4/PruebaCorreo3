@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\MailController;
 use App\Http\Controllers\GetTokenController;
+use App\Http\Controllers\CorreoController;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
@@ -28,10 +28,18 @@ Route::get('/', function () {
 });
 
 Route::prefix('/')->group(function(){
+
     Route::view('home','home')->name('home');
-    // Route::post('/get-token',[OAuthController::class,'doGenerateToken'])->name('generate.token');
-    Route::post('/get-token',[GetTokenController::class,'index'])->name('generate.token');
-    Route::get('/get-token',[GetTokenController::class,'index'])->name('generate.token');
-    // Route::get('/get-token',[OAuthController::class, 'doSuccessToken'])->name('token.success');
-    Route::post('/send',[MailController::class, 'doSendEmail'])->name('send.email');
+
+    //para obtener token
+    // Route::post('/get-token',[GetTokenController::class,'index'])->name('generate.token');
+
+    // Route::get('/get-token',[GetTokenController::class,'index'])->name('generate.token');
+
+    //para enviar correo
+
+    Route::post('/enviar',[CorreoController::class,'enviarCorreo'])->name('enviar.correo');
+
+    Route::get('/enviar',[CorreoController::class,'enviarCorreo'])->name('enviar.correo');
+
 });
