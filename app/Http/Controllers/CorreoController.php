@@ -28,7 +28,12 @@ class CorreoController extends Controller
         $clientSecret = $request->input('client_secret');
         
         $db = new BaseDatosController();
-        $refreshToken = $db->get_refersh_token();
+        $refreshToken = $db->get_refersh_token($clientId,$clientSecret);
+
+        if(!$refreshToken){
+            $gtoken=new GetTokenController();
+            $refreshToken = $gtoken->getToken($clientId,$clientSecret);
+        }
         
         $provider = new Google(
             [
