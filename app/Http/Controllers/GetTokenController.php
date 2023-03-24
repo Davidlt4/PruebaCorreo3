@@ -12,8 +12,6 @@ class GetTokenController extends Controller
     
     public function getToken($client_id,$client_secret)
     {
-         
-        require 'C:\xampp\htdocs\PruebaCorreo\gmail-oauth-app\vendor\autoload.php';
       
         session_start();
          

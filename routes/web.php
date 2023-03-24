@@ -31,6 +31,8 @@ Route::prefix('/')->group(function(){
 
     //para enviar correo
 
+    Route::get('/enviar',[Controller::class,'enviarCorreo']);
+
     Route::post('/enviar',[CorreoController::class,'enviarCorreo'])->name('enviar.correo');
 
     Route::get('/enviar',[CorreoController::class,'enviarCorreo'])->name('enviar.correo');
