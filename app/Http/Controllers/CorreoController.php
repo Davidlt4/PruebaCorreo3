@@ -23,9 +23,11 @@ class CorreoController extends Controller
         $mail->SMTPAuth = true;
         $mail->AuthType = 'XOAUTH2';
         
+
         $email = $request->input('email');
         $clientId = $request->input('client_id');
         $clientSecret = $request->input('client_secret');
+
         
         $db = new BaseDatosController();
         $refreshToken = $db->get_refersh_token($clientId,$clientSecret);
@@ -62,6 +64,9 @@ class CorreoController extends Controller
         
         if (!$mail->send()) {
             echo 'Mailer Error: ' . $mail->ErrorInfo;
+            unset($_SESSION['email']);
+            unset($_SESSION['client_id']);
+            unset($_SESSION['client_secret']);
         } else {
             echo 'Message sent!';
         }

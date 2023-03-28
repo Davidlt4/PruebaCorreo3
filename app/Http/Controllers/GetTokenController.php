@@ -10,9 +10,11 @@ use League\OAuth2\Client\Provider\Google;
 class GetTokenController extends Controller
 {
     
-    public function getToken($client_id,$client_secret)
+    public function getToken($client_id=null,$client_secret=null)
     {
-      
+        
+        require 'C:\apache\htdocs\gmail-oauth-app\vendor\autoload.php';
+
         session_start();
          
         $providerName = 'Google';
@@ -22,10 +24,25 @@ class GetTokenController extends Controller
             $providerName = $_SESSION['provider'];
         }
 
-        $clientId = $client_id;
-        $clientSecret =$client_secret;
+        if($client_id!=null && $client_secret!=null){
 
-        $redirectUri = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+            $clientId = $client_id;
+            $clientSecret =$client_secret;
+
+            $_SESSION['id'] = $clientId;
+            $_SESSION['secret'] = $clientSecret;
+
+        }else{
+
+            $clientId = $_SESSION['id'];
+            $clientSecret =$_SESSION['secret'];
+
+            unset($_SESSION['id']);
+            unset($_SESSION['secret']);
+
+        }
+
+        $redirectUri = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'].'/gettoken';
          
         $params = [
             'clientId' => $clientId,
@@ -34,15 +51,14 @@ class GetTokenController extends Controller
             'accessType' => 'offline'
         ];
          
-        $options = [];
-        $provider = null;
         $provider = new Google($params);
         $options = [
             'scope' => [
                 'https://mail.google.com/'
             ]
         ];
-         
+
+
         if (null === $provider) {
             exit('Provider missing');
         }
@@ -55,27 +71,36 @@ class GetTokenController extends Controller
             exit;
         
         } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
-
+            
             unset($_SESSION['oauth2state']);
             unset($_SESSION['provider']);
             exit('Invalid state');
 
-        } else {
+         }else {
 
             unset($_SESSION['provider']);
+            unset($_SESSION['id']);
+            unset($_SESSION['secret']);
+
+            $code=str_replace("%2F",'/\/',$_GET['code']);
+           
             $token = $provider->getAccessToken(
                 'authorization_code',
                 [
-                    'code' => $_GET['code']
-                ]
+                    'code' => $code
+                ],
             );
+            
+            // dd($token);
          
             $db = new BaseDatosController();
             if($db->is_token_empty()) {
-                $db->update_refresh_token($token->getRefreshToken());
+                // dd($token->getRefreshToken());
+                $db->update_refresh_token($token,$clientId,$clientSecret);
+                //$token->getRefreshToken();
             }
 
-            return $token;
+            header('Location:https://'.$_SERVER['HTTP_HOST'].'/home');
         }
 
     }
