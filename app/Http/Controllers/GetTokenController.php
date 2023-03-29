@@ -16,6 +16,19 @@ class GetTokenController extends Controller
         require 'C:\apache\htdocs\gmail-oauth-app\vendor\autoload.php';
 
         session_start();
+
+        $providerName='';
+
+        // if(array_key_exists('provider',$_GET)){
+        //     $providerName=$_GET['provider'];
+        //     $_SESSION['provider']=$providerName;
+        // }elseif(array_key_exists('provider',$_SESSION)){
+        //     $providerName=$_SESSION['provider'];
+        // }
+
+        // if(!in_array($providerName,['Google','Microsoft'])){
+        //     exit ('Only Google, Microsoft and Yahoo OAuth2 providers are currently supported in this script.');
+        // }
          
         $providerName = 'Google';
         $_SESSION['provider'] = $providerName;
@@ -57,6 +70,29 @@ class GetTokenController extends Controller
                 'https://mail.google.com/'
             ]
         ];
+
+        // $options = [];
+        // $provider = null;
+        
+        // switch ($providerName) {
+        //     case 'Google':
+        //         $provider = new Google($params);
+        //         $options = [
+        //             'scope' => [
+        //                 'https://mail.google.com/'
+        //             ]
+        //         ];
+        //         break;
+        //     case 'Microsoft':
+        //         $provider = new Microsoft($params);
+        //         $options = [
+        //             'scope' => [
+        //                 'wl.imap',
+        //                 'wl.offline_access'
+        //             ]
+        //         ];
+        //         break;
+        // }
 
 
         if (null === $provider) {
@@ -100,7 +136,8 @@ class GetTokenController extends Controller
                 //$token->getRefreshToken();
             }
 
-            header('Location:https://'.$_SERVER['HTTP_HOST'].'/home');
+            // header('Location:https://'.$_SERVER['HTTP_HOST'].'/home');
+            echo "token creado";
         }
 
     }
